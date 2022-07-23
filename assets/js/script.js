@@ -1,3 +1,6 @@
+var userFormEl = document.querySelector("#user-form");
+var cityInputEl = document.querySelector("#city-search");
+
 
 const city = document.getElementById("city").value;
 
