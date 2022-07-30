@@ -10,6 +10,7 @@ var dailyTitleEl = document.createElement("div");
 var dailyWeatherEl = document.createElement("div");
 var todayDate = moment().format("MM/DD/YYYY");
 
+
 const apiKey = "1243104a39fee9bac22480d3d97da492";
 
 const getCity = (city) => {
@@ -25,7 +26,7 @@ const getCity = (city) => {
       const lat = data.city.coord.lat;
       const lon = data.city.coord.lon;
       console.log(lat, lon);
-      getWeather(lat, lon);
+      getWeather(lat, lon, city);
     });
 };
 
@@ -40,7 +41,7 @@ function buttonHandler(event) {
   }
 }
 
-var getWeather = function (x, y) {
+var getWeather = function ( x, y, city) {
   // var city = document.getElementById("city").value;
   apiUrl1 = `https://api.openweathermap.org/data/2.5/onecall?lat=${x}&lon=${y}&units=imperial&appid=${apiKey}`;
   fetch(apiUrl1)
@@ -49,6 +50,8 @@ var getWeather = function (x, y) {
     })
     .then(function (data) {
       console.log(data);
+var iconImg = document.createElement('img');
+
 
       // set element city name
       var icon =
@@ -57,17 +60,20 @@ var getWeather = function (x, y) {
         ".png";
       console.log(icon);
 
-      cityEl.innerHTML = cityEl.value + '<img src= icon />';
+      iconImg.setAttribute('src', icon);
+      todayEl.appendChild(iconImg);
+
+      cityEl.innerHTML = city + icon;
       tempEl.innerHTML = "Temp: " + data.current.temp + "°";
       windEl.innerHTML = "Wind: " + data.current.wind_speed + " mph";
       humidityEl.innerHTML = "Humidity: " + data.current.humidity + "%";
-      // uviEl.innerHTML = "UVI Index: " + "<span>" + data.current.uvi + "<span>";
+      uviEl.innerHTML = "UVI Index: " + "<span>" + data.current.uvi + "<span>";
 
       todayEl.appendChild(cityEl);
       todayEl.appendChild(tempEl);
       todayEl.appendChild(windEl);
       todayEl.appendChild(humidityEl);
-      //todayEl.appendChild(uviEl);
+      todayEl.appendChild(uviEl);
 
       for (var i = 0; i < 5; i++) {
         forecastDate = moment(todayDate,"MM/DD/YYYY").add((i+1), "days");
@@ -98,7 +104,7 @@ var getWeather = function (x, y) {
           data.daily[i].weather[0].description;
 
         var weatherDay = i + 1;
-        displayData(weatherDay, dailyHeadingEl, dailyWeatherEl);
+        displayData(weatherDay, dailyTitleEl, dailyWeatherEl);
       }
     });
 
