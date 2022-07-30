@@ -4,9 +4,7 @@ var tempEl = document.querySelector("#temp");
 var windEl = document.querySelector("#wind");
 var humidityEl = document.querySelector("#humidity");
 var uviEl = document.querySelector("#uvi");
-var conditionsEl = document.querySelector("#conditions");
 var userFormEl = document.querySelector("#user-form");
-var cityInputEl = document.querySelector("#searchBtn");
 var cityEl = document.querySelector("#city-search");
 //var todayDate = moment().format("MM/DD/YYYY");
 
@@ -40,21 +38,6 @@ function buttonHandler(event) {
   }
 }
 
-// ============================================================================
-//{
-//   "id": 4671654,
-//   "name": "Austin",
-//   "coord": {
-//       "lat": 30.2672,
-//       "lon": -97.7431
-//   },
-//   "country": "US",
-//   "population": 790390,
-//   "timezone": -18000,
-//   "sunrise": 1658749510,
-//   "sunset": 1658798971
-// }
-// ==================================================================
 
 var getWeather = function (x, y) {
   // var city = document.getElementById("city").value;
@@ -65,15 +48,17 @@ var getWeather = function (x, y) {
     })
     .then(function (data) {
       console.log(data);
-      console.log(`this is the lat ${x}`);
-      console.log(`this is the lon ${y}`);
+     
 
-      cityEl.innerHTML = ""
+      // set element city name
+       var icon ="https://api.openweathermap.org/img/w/" + data.current.weather[0].icon + ".png";
+          console.log(icon);
+
+      //cityEl.innerHTML = cityEl.value + '<img src= icon />';
       tempEl.innerHTML = "Temp: " + data.current.temp + "°";
       windEl.innerHTML = "Wind: " + data.current.wind_speed + " mph";
       humidityEl.innerHTML = "Humidity: " + data.current.humidity + "%";
-      //uviEl.innerHTML ="UVI Index: " + data.current.uvi;
-      
+      // uviEl.innerHTML = "UVI Index: " + "<span>" + data.current.uvi + "<span>";
     });
 };
 
